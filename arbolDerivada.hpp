@@ -415,13 +415,12 @@ void ArbolDerivada::sufijoAArbol()
 
 void ArbolDerivada::derivarArbol()
 {
-    // Llama al metodo para calcular la derivada de todos los nodos del arbol y almacena la raiz del arbol de sintaxis derivado en el atributo "raiz_"
+    // Llama al metodo para calcular la derivada de todos los nodos del arbol
     derivarNodo(getNodoRaiz());
 }
 
 void ArbolDerivada::derivarNodo(NodoArbol *nodoActPtr)
 {
-
     // Como se deben comparar dos cadenas entonces hay que usar comillas dobles "", en caso de comparar caracteres se usan comillas simples ''
     // Si el nodo es un signo mas
     if(nodoActPtr->dato == "+")  {
