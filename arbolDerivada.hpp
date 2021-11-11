@@ -20,10 +20,10 @@ inline bool esDigitoOLetra(char x)
     return ((x >= 48 && x <= 57) || (x >= 65 && x <= 90) || (x >= 97 && x <= 122));
 }
 
-// Funcion que regresara "True" en caso de que "x" sea una letra minuscula (para las variables)
+// Funcion que regresara "True" en caso de que "x" sea una variable
 inline bool esVariable(std::string x)
 {
-    return (x == "x" || x == "y" || x == "z");
+    return (x == "x");
 }
 
 // Funcion que regresara "True" en caso de que "x" sea un corchete
@@ -88,6 +88,10 @@ ArbolDerivada::~ArbolDerivada()
     prefijo = "";
     infijo = "";
 }
+
+void ArbolDerivada::setPrefijo(const std::string &prefijo)  {  this->prefijo = prefijo;  }
+
+void ArbolDerivada::setSufijo(const std::string &sufijo)  {  this->sufijo = sufijo;  }
 
 void ArbolDerivada::infijoAPrefijo()
 {
@@ -427,13 +431,11 @@ void ArbolDerivada::derivarNodo(NodoArbol *nodoActPtr)
         derivarNodo(nodoActPtr->izq);
         derivarNodo(nodoActPtr->der);
     }
-
     // Si el nodo es un signo menos
     else if(nodoActPtr->dato == "-")  {
         derivarNodo(nodoActPtr->izq);
         derivarNodo(nodoActPtr->der);
     }
-
     // Si el nodo es un signo producto
     else if(nodoActPtr->dato == "*")  {
         // Crea copias de los hijos del nodo "nodoActPtr"
@@ -457,7 +459,6 @@ void ArbolDerivada::derivarNodo(NodoArbol *nodoActPtr)
         nodoActPtr->izq = l;
         nodoActPtr->der = r;
     }
-
     // Si el nodo es un signo cociente
     else if(nodoActPtr->dato == "/")  {
         // Crea copias de los hijos del nodo "nodoActPtr"
@@ -488,7 +489,6 @@ void ArbolDerivada::derivarNodo(NodoArbol *nodoActPtr)
         nodoActPtr->izq = restaNum;
         nodoActPtr->der = denCuadr;
     }
-
     // Si el nodo es un signo potencia
     else if(nodoActPtr->dato == "^")  {
         // Si "g" es un numero
@@ -547,7 +547,6 @@ void ArbolDerivada::derivarNodo(NodoArbol *nodoActPtr)
             nodoActPtr->der = r;
         }
     }
-
     // Si el nodo no es un simbolo de operador (numeros, variables o funciones trascendentes)
     else  {
         // Deriva las hojas del arbol de sintaxis
@@ -556,7 +555,6 @@ void ArbolDerivada::derivarNodo(NodoArbol *nodoActPtr)
             nodoActPtr->dato = std::string("1");
             return;
         }
-
         // Si el nodo es una funcion seno
         else if(nodoActPtr->dato.substr(0, 3) == "sen" || nodoActPtr->dato.substr(0, 3) == "sin")  {
             // Crea el nodo que contendra la derivada de la funcion seno
@@ -577,7 +575,6 @@ void ArbolDerivada::derivarNodo(NodoArbol *nodoActPtr)
             nodoActPtr->izq = derSin;
             nodoActPtr->der = arbolAux->getNodoRaiz();
         }
-
         // Si el nodo es una funcion coseno
         else if(nodoActPtr->dato.substr(0, 3) == "cos")  {
             // Crea los nodos que contendran la derivada de la funcion coseno
@@ -602,7 +599,6 @@ void ArbolDerivada::derivarNodo(NodoArbol *nodoActPtr)
             nodoActPtr->izq = res;
             nodoActPtr->der = arbolAux->getNodoRaiz();
         }
-
         // Si el nodo es una funcion exponencial natural
         else if(nodoActPtr->dato.substr(0, 3) == "exp")  {
             // Crea el nodo que contendra la derivada de la funcion exponencial natural
@@ -623,7 +619,6 @@ void ArbolDerivada::derivarNodo(NodoArbol *nodoActPtr)
             nodoActPtr->izq = derExp;
             nodoActPtr->der = arbolAux->getNodoRaiz();
         }
-
         // Si el nodo es una funcion logaritmo natural
         else if(nodoActPtr->dato.substr(0, 2) == "ln")  {
             // Crea un arbol de sintaxis con el argumento
@@ -646,7 +641,6 @@ void ArbolDerivada::derivarNodo(NodoArbol *nodoActPtr)
             nodoActPtr->izq = arbolAux->getNodoRaiz();
             nodoActPtr->der = den->getNodoRaiz();
         }
-
         // Si el nodo es un numero
         else  {
             nodoActPtr->dato = std::string("0");
@@ -690,4 +684,122 @@ void ArbolDerivada::agruparTerminos(NodoArbol **nodoActPtr)
     NodoArbol *nuevoActPtr = new NodoArbol(std::string(exprAgrupAux));
     // Reemplaza el "nodoActPtr" por "nuevoActPtr"
     *nodoActPtr = nuevoActPtr;
+}
+
+void ArbolDerivada::simplificarArbol()
+{
+    // Llama al metodo que simplificara el arbol empezando por la raiz
+    simplificarNodo(this->getDireccionNodoRaiz());
+}
+
+void ArbolDerivada::simplificarNodo(NodoArbol **nodoActPtr)
+{
+    // Condicion de paro de recursion (solo admite nodos padre)
+    if(!(*nodoActPtr)->izq && !(*nodoActPtr)->der)  {
+        return;
+    }
+
+    // Si hay un cero del lado derecho
+    if((*nodoActPtr)->der->dato == "0")  {
+        // Si el signo es mas o es menos
+        if((*nodoActPtr)->dato == "+" || (*nodoActPtr)->dato == "-")  {
+            // Crea un nuevo nodo con la copia del subarbol izquierdo
+            NodoArbol *nuevoActPtr = copiarSubarbol((*nodoActPtr)->izq);
+            // Elimina el nodo "nodoActPtr" y lo reemplaza por "nuevoActPtr"
+            eliminarSubarbol(*nodoActPtr);
+            *nodoActPtr = nuevoActPtr;
+            return;
+        }
+        // Si el signo es producto
+        else if((*nodoActPtr)->dato == "*")  {
+            // Crea un nuevo nodo con un cero
+            NodoArbol *cero = new NodoArbol(std::string("0"));
+            // Elimina el nodo "nodoActPtr" y lo reemplaza por "cero"
+            eliminarSubarbol(*nodoActPtr);
+            *nodoActPtr = cero;
+            return;
+        }
+        // Si el signo es potencia
+        else if((*nodoActPtr)->dato == "^")  {
+            // Crea un nuevo nodo con un uno
+            NodoArbol *uno = new NodoArbol(std::string("1"));
+            // Elimina el nodo "nodoActPtr" y lo reemplaza por "uno"
+            eliminarSubarbol(*nodoActPtr);
+            *nodoActPtr = uno;
+            return;
+        }
+    }
+    // Si hay un cero del lado izquierdo
+    else if((*nodoActPtr)->izq->dato == "0")  {
+        // Si el signo es mas
+        if((*nodoActPtr)->dato == "+")  {
+            // Crea un nuevo nodo con la copia del subarbol derecho
+            NodoArbol *nuevoActPtr = copiarSubarbol((*nodoActPtr)->der);
+            // Elimina el nodo "nodoActPtr" y lo reemplaza por "nuevoActPtr"
+            eliminarSubarbol(*nodoActPtr);
+            *nodoActPtr = nuevoActPtr;
+            return;
+        }
+        // Si el signo es producto o cociente
+        else if((*nodoActPtr)->dato == "*" || (*nodoActPtr)->dato == "/")  {
+            // Crea un nuevo nodo con un cero
+            NodoArbol *cero = new NodoArbol(std::string("0"));
+            // Elimina el nodo "nodoActPtr" y lo reemplaza por "cero"
+            eliminarSubarbol(*nodoActPtr);
+            *nodoActPtr = cero;
+            return;
+        }
+    }
+    // Si hay un uno del lado derecho
+    else if((*nodoActPtr)->der->dato == "1")  {
+        // Si el signo es producto o potencia
+        if((*nodoActPtr)->dato == "*" || (*nodoActPtr)->dato == "^")  {
+            // Crea un nuevo nodo con la copia del subarbol izquierdo
+            NodoArbol *nuevoActPtr = copiarSubarbol((*nodoActPtr)->izq);
+            // Elimina el nodo "nodoActPtr" y lo reemplaza por "nuevoActPtr"
+            eliminarSubarbol(*nodoActPtr);
+            *nodoActPtr = nuevoActPtr;
+            return;
+        }
+    }
+    // Si hay un uno del lado izquierdo
+    else if((*nodoActPtr)->izq->dato == "1")  {
+        // Si el signo es producto
+        if((*nodoActPtr)->dato == "*")  {
+            // Crea un nuevo nodo con la copia del subarbol derecho
+            NodoArbol *nuevoActPtr = copiarSubarbol((*nodoActPtr)->der);
+            // Elimina el nodo "nodoActPtr" y lo reemplaza por "nuevoActPtr"
+            eliminarSubarbol(*nodoActPtr);
+            *nodoActPtr = nuevoActPtr;
+            return;
+        }
+    }
+    // Si "nodoActPtr" es padre de las hojas del arbol
+    else if(((*nodoActPtr)->izq->izq == nullptr && (*nodoActPtr)->izq->der == nullptr) && (*nodoActPtr)->der->izq == nullptr && (*nodoActPtr)->der->der == nullptr)  {
+        // Si los terminos son iguales
+        if((*nodoActPtr)->izq->dato == (*nodoActPtr)->der->dato)  {
+            // Si el signo es menos
+            if((*nodoActPtr)->dato == "-")  {
+                // Crea un nuevo nodo con un cero
+                NodoArbol *cero = new NodoArbol(std::string("0"));
+                // Elimina el nodo "nodoActPtr" y lo reemplaza por "cero"
+                eliminarSubarbol(*nodoActPtr);
+                *nodoActPtr = cero;
+                return;
+            }
+            // Si el signo es cociente
+            else if((*nodoActPtr)->dato == "/")  {
+                // Crea un nuevo nodo con un uno
+                NodoArbol *uno = new NodoArbol(std::string("1"));
+                // Elimina el nodo "nodoActPtr" y lo reemplaza por "uno"
+                eliminarSubarbol(*nodoActPtr);
+                *nodoActPtr = uno;
+                return;
+            }
+        }
+    }
+
+    // Llama al metodo "simplificarNodo" de forma recursiva para recorrer todos los nodos
+    simplificarNodo(&(*nodoActPtr)->izq);
+    simplificarNodo(&(*nodoActPtr)->der);
 }

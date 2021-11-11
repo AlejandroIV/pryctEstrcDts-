@@ -32,11 +32,13 @@ class ArbolBinario
 
                 /**
                 * @brief Constructor de la clase "NodoArbol" que inicializara los atributos
+                * @param dato Dato que se desea almacenar en el nodo
                 */
                 NodoArbol(const T &dato) : dato(dato), izq(nullptr), der(nullptr)  {  }
 
                 /**
                 * @brief Constructor copia de la clase "NodoArbol"
+                * @param otro Nodo que se desea copiar
                 */
                 NodoArbol(const NodoArbol &otro) : dato(otro.dato), izq(otro.izq), der(otro.der)  {  }
         };
@@ -56,68 +58,68 @@ class ArbolBinario
         ~ArbolBinario();
 
         /**
-         * @brief Metodo que asigna un valor al atributo "raiz_"
-         * @param raiz_ Nodo raiz de un arbol binario
+         * @brief Asigna un valor al atributo "raiz_"
+         * @param raiz_ Nodo de un arbol binario
          */
         void setNodoRaiz(NodoArbol *raiz_);
 
         /**
-         * @brief Metodo que regresa el atributo "raiz_"
+         * @brief Regresa el atributo "raiz_"
          * @return Nodo raiz del arbol
          */
         NodoArbol* getNodoRaiz();
 
         /**
-         * @brief Metodo que regresa la direccion del atributo "raiz_"
+         * @brief Regresa la direccion del atributo "raiz_"
          * @return Puntero a nodo raiz del arbol
          */
         NodoArbol** getDireccionNodoRaiz();
 
         /**
-         * @brief Metodo que regresa el nodo raiz del subarbol que es copia de otro
+         * @brief Regresa el nodo raiz del subarbol que es copia de otro
          * @param subarbolRaizPtr Nodo raiz del subarbol que se desea copiar
          * @return Nodo raiz del subarbol copia
          */
         NodoArbol* copiarSubarbol(NodoArbol *subarbolRaizPtr);
 
         /**
-         * @brief Metodo que recorre un subarbol para realizar las copias de los nodos de un subarbol recursivamente
+         * @brief Recorre un subarbol para realizar las copias de los nodos de un subarbol recursivamente
          * @param nodoActPtr Nodo del arbol
          * @return Nodo copiado
          */
         NodoArbol* copiarNodo(NodoArbol *nodoActPtr);
 
         /**
-         * @brief Metodo que elimina todo un subarbol completo
+         * @brief Elimina todo un subarbol completo
          * @param subarbolRaizPtr Nodo raiz del subarbol que se desea eliminar
          */
         void eliminarSubarbol(NodoArbol *subarbolRaizPtr);
 
         /**
-         * @brief Metodo que elimina todo el arbol completo
+         * @brief Elimina todo el arbol completo
          */
         void eliminarArbol();
 
         /**
-         * @brief Metodo que imprime el contenido de un nodo
+         * @brief Imprime el contenido de un nodo
          * @param act Nodo del arbol
          */
         void imprimirNodo(NodoArbol *act);
 
         /**
-         * @brief Metodo que imprime el recorrido inorden del arbol binario
+         * @brief Imprime el recorrido inorden del arbol binario
          * @param act Nodo del arbol
          */
         void inorden(NodoArbol *act);
 
         /**
-         * @brief Metodo que imprime el recorrido preorden del arbol binario
+         * @brief Imprime el recorrido preorden del arbol binario
          * @param act Nodo del arbol
          */
         void preorden(NodoArbol *act);
 
         /**
-         * @brief Metodo que imprime el recorrido postorden del arbol binario
+         * @brief Imprime el recorrido postorden del arbol binario
          * @param act Nodo del arbol
          */
         void postorden(NodoArbol *act);

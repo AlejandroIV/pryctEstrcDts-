@@ -2,7 +2,7 @@
  * @file arbolDerivada.h
  *
  * Declaracion de la clase "ArbolDerivada" que es para la construccion de objetos
- * que pueden formar un arbol de sintaxis y calcular su derivada
+ * que pueden formar un arbol de expresiones algebraicas y calcular su derivada
  *
  * @author Alejandro Delgado Rivera <AlejandroDR_IV@Outlook.com>
  * @version 1.0
@@ -40,50 +40,71 @@ class ArbolDerivada : public ArbolBinario<std::string>
         ~ArbolDerivada();
 
         /**
-         * @brief Metodo que convierte la expresion en notacion infijo almacenada en el objeto
-         * a notacion prefijo y lo almacena en el atributo "prefijo"
+         * @brief Asigna un valor al atributo "prefijo"
+         * @param prefijo Expresion algebraica en notacion prefijo
+         */
+        void setPrefijo(const std::string &prefijo);
+
+        /**
+         * @brief Asigna un valor al atributo "sufijo"
+         * @param sufijo Expresion algebraica en notacion sufijo
+         */
+        void setSufijo(const std::string &sufijo);
+
+        /**
+         * @brief Convierte la expresion en notacion infijo almacenada en el objeto a notacion prefijo y lo almacena en el atributo "prefijo"
          */
         void infijoAPrefijo();
 
         /**
-         * @brief Metodo que convierte la expresion en notacion infijo almacenada en el objeto
-         * a notacion sufijo y lo almacena en el atributo "sufijo"
+         * @brief Convierte la expresion en notacion infijo almacenada en el objeto a notacion sufijo y lo almacena en el atributo "sufijo"
          */
         void infijoASufijo();
 
         /**
-         * @brief Metodo que crea el arbol binario a partir de una expresion algebraica en notacion prefijo
+         * @brief Crea el arbol de expresiones algebraicas a partir de una expresion algebraica en notacion prefijo
          */
         void prefijoAArbol();
 
         /**
-         * @brief Metodo que crea el arbol binario a partir de una expresion algebraica en notacion sufijo
+         * @brief Crea el arbol de expresiones algebraicas a partir de una expresion algebraica en notacion sufijo
          */
         void sufijoAArbol();
 
         /**
-         * @brief Metodo que calcula la derivada del arbol de sintaxis
+         * @brief Calcula la derivada del arbol de expresiones algebraicas
          */
         void derivarArbol();
 
         /**
-         * @brief Metodo que calcula la derivada de un nodo recursivamente
-         * @param nodoActPtr Nodo del arbol de sintaxis que se desea derivar
+         * @brief Calcula la derivada de los nodos recursivamente
+         * @param nodoActPtr Nodo del arbol de expresiones algebraicas que se desea derivar
          */
         void derivarNodo(NodoArbol *nodoActPtr);
 
         /**
-         * @param Metodo que regresa una cadena con los terminos del arbol de sintaxis agrupados entre parentesis
-         * @param nodoActPtr Nodo del arbol de sintaxis que se desea agrupar
-         * @return Cadena con la expresion agrupada entre parentesis
+         * @param Regresa una cadena con los terminos del arbol de expresiones algebraicas agrupados entre parentesis
+         * @param nodoActPtr Nodo del arbol de expresiones algebraicas que se desea agrupar
+         * @return Cadena con la expresion algebraica agrupada entre parentesis
          */
         std::string obtenerAgrupacionSubarbol(NodoArbol *nodoPtr);
 
         /**
-         * @brief Metodo que recorrera los nodos de un subarbol de sintaxis recursivamente y agrupara los terminos entre parentesis
-         * @param nodoActPtr Nodo del arbol de sintaxis
+         * @brief Recorrera los nodos de un subarbol de expresiones algebraicas recursivamente y agrupara los terminos entre parentesis
+         * @param nodoActPtr Puntero a nodo del arbol de expresiones algebraicas
          */
         void agruparTerminos(NodoArbol **nodoActPtr);
+
+        /**
+         * @brief Simplifica el arbol de expresiones algebraicas
+         */
+        void simplificarArbol();
+
+        /**
+         * @brief Simplifica los nodos recursivamente
+         * @param nodoActPtr Puntero a nodo del arbol de expresiones algebraicas
+         */
+        void simplificarNodo(NodoArbol **nodoActPtr);
 };
 
 #include"arbolDerivada.hpp"
