@@ -214,7 +214,7 @@ int main()
                 system("clear");
                 break;
 
-            // Volver a crear arbol con la expresion de entrada
+            // Vuelve a crear arbol con la expresion de entrada
             case 7:
                 // Condicional para evitar errores
                 if(!creadoYDerivado[1])  {
