@@ -493,8 +493,9 @@ void ArbolDerivada::derivarNodo(NodoArbol *nodoActPtr)
     }
     // Si el nodo es un signo potencia
     else if(nodoActPtr->dato == "^")  {
-        // Si "g" es un numero
-        if(!tieneVariable(nodoActPtr->der->dato))  {
+        // Si "g" es un numero y no es un operador
+        if(!tieneVariable(nodoActPtr->der->dato) && nodoActPtr->der->dato != "+" && nodoActPtr->der->dato != "-" \
+            && nodoActPtr->der->dato != "*" && nodoActPtr->der->dato != "/" && nodoActPtr->der->dato != "^")  {
             // Crea copias de los hijos del nodo "nodoActPtr"
             NodoArbol *f = copiarSubarbol(nodoActPtr->izq);
             NodoArbol *g = copiarSubarbol(nodoActPtr->der);
@@ -523,7 +524,7 @@ void ArbolDerivada::derivarNodo(NodoArbol *nodoActPtr)
             nodoActPtr->izq = nodoActPtr->der;
             nodoActPtr->der = prod;
         }
-        // Si "g" es una funcion trascendente
+        // Si "g" es una funcion que depende de "x" o si es un operador
         else  {
             // Crea copias de los hijos del nodo "nodoActPtr"
             NodoArbol *f = copiarSubarbol(nodoActPtr->izq);
