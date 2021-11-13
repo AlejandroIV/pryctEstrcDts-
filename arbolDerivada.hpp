@@ -89,6 +89,8 @@ ArbolDerivada::~ArbolDerivada()
     infijo = "";
 }
 
+void ArbolDerivada::setInfijo(const std::string &infijo)  {  this->infijo = infijo;  }
+
 void ArbolDerivada::setPrefijo(const std::string &prefijo)  {  this->prefijo = prefijo;  }
 
 void ArbolDerivada::setSufijo(const std::string &sufijo)  {  this->sufijo = sufijo;  }
@@ -675,7 +677,7 @@ void ArbolDerivada::derivarNodo(NodoArbol *nodoActPtr)
             nodoActPtr->izq = prod;
             nodoActPtr->der = arbolAux->getNodoRaiz();
         }
-        // Si el nodo es una funcion cosecante
+        // Si el nodo es una funcion cosecante hiperbolico
         else if(nodoActPtr->dato.substr(0, 4) == "csch")  {
             // Crea los nodos que contendran la derivada de la funcion cosecante
             NodoArbol *derCsch1 = new NodoArbol("csch" + nodoActPtr->dato.substr(4));

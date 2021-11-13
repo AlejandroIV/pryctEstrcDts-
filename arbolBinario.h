@@ -48,7 +48,7 @@ class ArbolBinario
         };
 
     private:
-        NodoArbol *raiz_;
+        NodoArbol *raiz_;  // Nodo raiz del arbol
 
     public:
         /**

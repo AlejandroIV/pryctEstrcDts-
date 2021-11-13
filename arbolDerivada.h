@@ -42,6 +42,12 @@ class ArbolDerivada : public ArbolBinario<std::string>
         ~ArbolDerivada();
 
         /**
+         * @brief Asigna un valor al atributo "infijo"
+         * @param infijo Expresion algebraica en notacion infijo
+         */
+        void setInfijo(const std::string &infijo);
+
+        /**
          * @brief Asigna un valor al atributo "prefijo"
          * @param prefijo Expresion algebraica en notacion prefijo
          */
