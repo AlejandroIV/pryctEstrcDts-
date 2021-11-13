@@ -493,9 +493,34 @@ void ArbolDerivada::derivarNodo(NodoArbol *nodoActPtr)
     }
     // Si el nodo es un signo potencia
     else if(nodoActPtr->dato == "^")  {
+        // Si "g" es una funcion que depende de "x" o si es un operador
+        if(tieneVariable(nodoActPtr->der->dato) || nodoActPtr->der->dato == "+" || nodoActPtr->der->dato == "-" \
+            || nodoActPtr->der->dato == "*" || nodoActPtr->der->dato == "/" || nodoActPtr->der->dato == "^")  {
+            // Crea copias de los hijos del nodo "nodoActPtr"
+            NodoArbol *f = copiarSubarbol(nodoActPtr->izq);
+            NodoArbol *g = copiarSubarbol(nodoActPtr->der);
+
+            // Crea dos nodos para los terminos del producto
+            NodoArbol *l = new NodoArbol(std::string("^"));
+            NodoArbol *r = new NodoArbol(std::string("*"));
+
+            // Crea el nodo que contendra el logaritno
+            NodoArbol *ln = new NodoArbol(std::string("ln[" + this->obtenerAgrupacionSubarbol(f) + "]"));
+
+            // Cambia el signo potencia por producto
+            nodoActPtr->dato = "*";
+
+            // Aplica la regla de derivacion
+            l->izq = nodoActPtr->izq;
+            l->der = nodoActPtr->der;
+            r->izq = g;
+            r->der = ln;
+            derivarNodo(r);
+            nodoActPtr->izq = l;
+            nodoActPtr->der = r;
+        }
         // Si "g" es un numero y no es un operador
-        if(!tieneVariable(nodoActPtr->der->dato) && nodoActPtr->der->dato != "+" && nodoActPtr->der->dato != "-" \
-            && nodoActPtr->der->dato != "*" && nodoActPtr->der->dato != "/" && nodoActPtr->der->dato != "^")  {
+        else  {
             // Crea copias de los hijos del nodo "nodoActPtr"
             NodoArbol *f = copiarSubarbol(nodoActPtr->izq);
             NodoArbol *g = copiarSubarbol(nodoActPtr->der);
@@ -523,31 +548,6 @@ void ArbolDerivada::derivarNodo(NodoArbol *nodoActPtr)
             derivarNodo(f);
             nodoActPtr->izq = nodoActPtr->der;
             nodoActPtr->der = prod;
-        }
-        // Si "g" es una funcion que depende de "x" o si es un operador
-        else  {
-            // Crea copias de los hijos del nodo "nodoActPtr"
-            NodoArbol *f = copiarSubarbol(nodoActPtr->izq);
-            NodoArbol *g = copiarSubarbol(nodoActPtr->der);
-
-            // Crea dos nodos para los terminos del producto
-            NodoArbol *l = new NodoArbol(std::string("^"));
-            NodoArbol *r = new NodoArbol(std::string("*"));
-
-            // Crea el nodo que contendra el logaritno
-            NodoArbol *ln = new NodoArbol(std::string("ln[" + this->obtenerAgrupacionSubarbol(f) + "]"));
-
-            // Cambia el signo potencia por producto
-            nodoActPtr->dato = "*";
-
-            // Aplica la regla de derivacion
-            l->izq = nodoActPtr->izq;
-            l->der = nodoActPtr->der;
-            r->izq = g;
-            r->der = ln;
-            derivarNodo(r);
-            nodoActPtr->izq = l;
-            nodoActPtr->der = r;
         }
     }
     // Si el nodo no es un simbolo de operador (numeros, variables o funciones trascendentes)
