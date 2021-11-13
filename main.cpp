@@ -251,6 +251,170 @@ int main()
     arbol12.inorden(arbol12.getNodoRaiz());
     std::cout << std::endl;
     */
+    /*
+    ArbolDerivada arbolSin("SIN[(x + x * 3 - 4) / (x + 5)]");
+    ArbolDerivada arbolCos("Cos[(x + x * 3 - 4) / (x + 5)]");
+    ArbolDerivada arbolTan("tAn[(x + x * 3 - 4) / (x + 5)]");
+    ArbolDerivada arbolCot("COt[(x + x * 3 - 4) / (x + 5)]");
+    ArbolDerivada arbolSec("seC[(x + x * 3 - 4) / (x + 5)]");
+    ArbolDerivada arbolCsc("cSc[(x + x * 3 - 4) / (x + 5)]");
+
+    arbolSin.infijoAPrefijo();
+    arbolCos.infijoASufijo();
+    arbolTan.infijoAPrefijo();
+    arbolCot.infijoASufijo();
+    arbolSec.infijoAPrefijo();
+    arbolCsc.infijoASufijo();
+
+    arbolSin.prefijoAArbol();
+    arbolCos.sufijoAArbol();
+    arbolTan.prefijoAArbol();
+    arbolCot.sufijoAArbol();
+    arbolSec.prefijoAArbol();
+    arbolCsc.sufijoAArbol();
+
+    arbolSin.derivarArbol();
+    arbolCos.derivarArbol();
+    arbolTan.derivarArbol();
+    arbolCot.derivarArbol();
+    arbolSec.derivarArbol();
+    arbolCsc.derivarArbol();
+
+    std::cout << std::endl;
+    std::cout << "Despues de derivar" << std::endl;
+    std::cout << std::endl;
+
+    std::cout << std::endl;
+    std::cout << arbolSin.obtenerAgrupacionSubarbol(arbolSin.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << arbolCos.obtenerAgrupacionSubarbol(arbolCos.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << arbolTan.obtenerAgrupacionSubarbol(arbolTan.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << arbolCot.obtenerAgrupacionSubarbol(arbolCot.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << arbolSec.obtenerAgrupacionSubarbol(arbolSec.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << arbolCsc.obtenerAgrupacionSubarbol(arbolCsc.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+
+    arbolSin.simplificarArbol();
+    arbolCos.simplificarArbol();
+    arbolTan.simplificarArbol();
+    arbolCot.simplificarArbol();
+    arbolSec.simplificarArbol();
+    arbolCsc.simplificarArbol();
+
+    std::cout << std::endl;
+    std::cout << "Despues de simplificar" << std::endl;
+    std::cout << std::endl;
+
+    std::cout << std::endl;
+    std::cout << arbolSin.obtenerAgrupacionSubarbol(arbolSin.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << arbolCos.obtenerAgrupacionSubarbol(arbolCos.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << arbolTan.obtenerAgrupacionSubarbol(arbolTan.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << arbolCot.obtenerAgrupacionSubarbol(arbolCot.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << arbolSec.obtenerAgrupacionSubarbol(arbolSec.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << arbolCsc.obtenerAgrupacionSubarbol(arbolCsc.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    */
+    /*
+    ArbolDerivada arbolSinh("SINH[(x + x * 3 - 4) / (x + 5)]");
+    ArbolDerivada arbolCosh("CosH[(x + x * 3 - 4) / (x + 5)]");
+    ArbolDerivada arbolTanh("tAnH[(x + x * 3 - 4) / (x + 5)]");
+    ArbolDerivada arbolCoth("COtH[(x + x * 3 - 4) / (x + 5)]");
+    ArbolDerivada arbolSech("seCH[(x + x * 3 - 4) / (x + 5)]");
+    ArbolDerivada arbolCsch("cScH[(x + x * 3 - 4) / (x + 5)]");
+
+    arbolSinh.infijoAPrefijo();
+    arbolCosh.infijoASufijo();
+    arbolTanh.infijoAPrefijo();
+    arbolCoth.infijoASufijo();
+    arbolSech.infijoAPrefijo();
+    arbolCsch.infijoASufijo();
+
+    arbolSinh.prefijoAArbol();
+    arbolCosh.sufijoAArbol();
+    arbolTanh.prefijoAArbol();
+    arbolCoth.sufijoAArbol();
+    arbolSech.prefijoAArbol();
+    arbolCsch.sufijoAArbol();
+
+    arbolSinh.derivarArbol();
+    arbolCosh.derivarArbol();
+    arbolTanh.derivarArbol();
+    arbolCoth.derivarArbol();
+    arbolSech.derivarArbol();
+    arbolCsch.derivarArbol();
+
+    std::cout << std::endl;
+    std::cout << "Despues de derivar" << std::endl;
+    std::cout << std::endl;
+
+    std::cout << std::endl;
+    std::cout << arbolSinh.obtenerAgrupacionSubarbol(arbolSinh.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << arbolCosh.obtenerAgrupacionSubarbol(arbolCosh.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << arbolTanh.obtenerAgrupacionSubarbol(arbolTanh.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << arbolCoth.obtenerAgrupacionSubarbol(arbolCoth.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << arbolSech.obtenerAgrupacionSubarbol(arbolSech.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << arbolCsch.obtenerAgrupacionSubarbol(arbolCsch.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+
+    arbolSinh.simplificarArbol();
+    arbolCosh.simplificarArbol();
+    arbolTanh.simplificarArbol();
+    arbolCoth.simplificarArbol();
+    arbolSech.simplificarArbol();
+    arbolCsch.simplificarArbol();
+
+    std::cout << std::endl;
+    std::cout << "Despues de simplificar" << std::endl;
+    std::cout << std::endl;
+
+    std::cout << std::endl;
+    std::cout << arbolSinh.obtenerAgrupacionSubarbol(arbolSinh.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << arbolCosh.obtenerAgrupacionSubarbol(arbolCosh.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << arbolTanh.obtenerAgrupacionSubarbol(arbolTanh.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << arbolCoth.obtenerAgrupacionSubarbol(arbolCoth.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << arbolSech.obtenerAgrupacionSubarbol(arbolSech.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << arbolCsch.obtenerAgrupacionSubarbol(arbolCsch.getNodoRaiz()) << std::endl;
+    std::cout << std::endl;
+    */
     system("pause");
     return 0;
 }

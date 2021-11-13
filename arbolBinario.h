@@ -1,8 +1,7 @@
 /**
  * @file arbolBinario.h
  *
- * Declaracion de la clase "ArbolBinario" que es para la construccion de objetos
- * que pueden formar un arbol binario
+ * @brief Contiene la declaracion de la clase "ArbolBinario"
  *
  * @author Alejandro Delgado Rivera <AlejandroDR_IV@Outlook.com>
  * @version 2.0
@@ -13,11 +12,16 @@
 
 #include<iostream>
 
+/**
+ * @brief La clase "ArbolBinario" es para construir objetos que pueden formar un arbol binario
+ */
 template<typename T>
 class ArbolBinario
 {
     protected:
-        // Clase para la construccion de objetos que se usaran como nodos del arbol
+        /**
+         * @brief La clase "NodoArbol" es para construir objetos que se usaran como nodos de los arboles formados por la clase "ArbolBinario"
+         */
         class NodoArbol
         {
             public:

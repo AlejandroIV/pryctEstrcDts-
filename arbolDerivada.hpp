@@ -1,7 +1,7 @@
 /**
  * @file arbolDerivada.hpp
  *
- * Definicion de la clase "ArbolDerivada"
+ * @brief Contiene la definicion de la clase "ArbolDerivada"
  *
  * @author Alejandro Delgado Rivera <AlejandroDR_IV@Outlook.com>
  * @version 1.0
@@ -555,6 +555,154 @@ void ArbolDerivada::derivarNodo(NodoArbol *nodoActPtr)
             nodoActPtr->dato = std::string("1");
             return;
         }
+        // Si el nodo es una funcion seno hiperbolico
+        else if(nodoActPtr->dato.substr(0, 4) == "senh" || nodoActPtr->dato.substr(0, 4) == "sinh")  {
+            // Crea el nodo que contendra la derivada de la funcion seno hiperbolico
+            NodoArbol *derSinh = new NodoArbol("cosh" + nodoActPtr->dato.substr(4));
+
+            // Crea un arbol de sintaxis con el argumento para poder derivarlo
+            int inicio = nodoActPtr->dato.find("[");
+            int final = nodoActPtr->dato.find("]");
+            ArbolDerivada *arbolAux = new ArbolDerivada(nodoActPtr->dato.substr((inicio + 1), (final - inicio - 1)));
+            arbolAux->infijoASufijo();
+            arbolAux->sufijoAArbol();
+            arbolAux->derivarArbol();
+
+            // Cambia el nodo por el signo producto
+            nodoActPtr->dato = "*";
+
+            // Aplica la regla de derivacion
+            nodoActPtr->izq = derSinh;
+            nodoActPtr->der = arbolAux->getNodoRaiz();
+        }
+        // Si el nodo es una funcion coseno hiperbolico
+        else if(nodoActPtr->dato.substr(0, 4) == "cosh")  {
+            // Crea el nodo que contendra la derivada de la funcion coseno hiperbolico
+            NodoArbol *derCosh = new NodoArbol("sinh" + nodoActPtr->dato.substr(4));
+
+            // Crea un arbol de sintaxis con el argumento para poder derivarlo
+            int inicio = nodoActPtr->dato.find("[");
+            int final = nodoActPtr->dato.find("]");
+            ArbolDerivada *arbolAux = new ArbolDerivada(nodoActPtr->dato.substr((inicio + 1), (final - inicio - 1)));
+            arbolAux->infijoASufijo();
+            arbolAux->sufijoAArbol();
+            arbolAux->derivarArbol();
+
+            // Cambia el nodo por el signo producto
+            nodoActPtr->dato = "*";
+
+            // Aplica la regla de derivacion
+            nodoActPtr->izq = derCosh;
+            nodoActPtr->der = arbolAux->getNodoRaiz();
+        }
+        // Si el nodo es una funcion tangente hiperbolico
+        else if(nodoActPtr->dato.substr(0, 4) == "tanh")  {
+            // Crea los nodos que contendran la derivada de la funcion tangente hiperbolico
+            NodoArbol *derTanh = new NodoArbol("sech" + nodoActPtr->dato.substr(4));
+            NodoArbol *pot = new NodoArbol("^");
+            NodoArbol *dos = new NodoArbol("2");
+
+            // Crea un arbol de sintaxis con el argumento para poder derivarlo
+            int inicio = nodoActPtr->dato.find("[");
+            int final = nodoActPtr->dato.find("]");
+            ArbolDerivada *arbolAux = new ArbolDerivada(nodoActPtr->dato.substr((inicio + 1), (final - inicio - 1)));
+            arbolAux->infijoAPrefijo();
+            arbolAux->prefijoAArbol();
+            arbolAux->derivarArbol();
+
+            // Cambia el nodo por el signo producto
+            nodoActPtr->dato = "*";
+
+            // Aplica la regla de derivacion
+            pot->izq = derTanh;
+            pot->der = dos;
+            nodoActPtr->izq = pot;
+            nodoActPtr->der = arbolAux->getNodoRaiz();
+        }
+        // Si el nodo es una funcion cotangete hiperbolico
+        else if(nodoActPtr->dato.substr(0, 4) == "coth")  {
+            // Crea los nodos que contendran la derivada de la funcion cotangente hiperbolico
+            NodoArbol *derCoth = new NodoArbol("csch" + nodoActPtr->dato.substr(4));
+            NodoArbol *cero = new NodoArbol("0");
+            NodoArbol *res = new NodoArbol("-");
+            NodoArbol *pot = new NodoArbol("^");
+            NodoArbol *dos = new NodoArbol("2");
+
+            // Crea un arbol de sintaxis con el argumento para poder derivarlo
+            int inicio = nodoActPtr->dato.find("[");
+            int final = nodoActPtr->dato.find("]");
+            ArbolDerivada *arbolAux = new ArbolDerivada(nodoActPtr->dato.substr((inicio + 1), (final - inicio - 1)));
+            arbolAux->infijoAPrefijo();
+            arbolAux->prefijoAArbol();
+            arbolAux->derivarArbol();
+
+            // Cambia el nodo por el signo producto
+            nodoActPtr->dato = "*";
+
+            // Aplica la regla de derivacion
+            res->izq = cero;
+            res->der = derCoth;
+            pot->izq = res;
+            pot->der = dos;
+            nodoActPtr->izq = pot;
+            nodoActPtr->der = arbolAux->getNodoRaiz();
+        }
+        // Si el nodo es una funcion secante hiperbolico
+        else if(nodoActPtr->dato.substr(0, 4) == "sech")  {
+            // Crea los nodos que contendran la derivada de la funcion secante hiperbolico
+            NodoArbol *derSech1 = new NodoArbol("sech" + nodoActPtr->dato.substr(4));
+            NodoArbol *derSech2 = new NodoArbol("tanh" + nodoActPtr->dato.substr(4));
+            NodoArbol *cero = new NodoArbol("0");
+            NodoArbol *res = new NodoArbol("-");
+            NodoArbol *prod = new NodoArbol("*");
+
+            // Crea un arbol de sintaxis con el argumento para poder derivarlo
+            int inicio = nodoActPtr->dato.find("[");
+            int final = nodoActPtr->dato.find("]");
+            ArbolDerivada *arbolAux = new ArbolDerivada(nodoActPtr->dato.substr((inicio + 1), (final - inicio - 1)));
+            arbolAux->infijoAPrefijo();
+            arbolAux->prefijoAArbol();
+            arbolAux->derivarArbol();
+
+            // Cambia el nodo por el signo producto
+            nodoActPtr->dato = "*";
+
+            // Aplica la regla de derivacion
+            res->izq = cero;
+            res->der = derSech1;
+            prod->izq = res;
+            prod->der = derSech2;
+            nodoActPtr->izq = prod;
+            nodoActPtr->der = arbolAux->getNodoRaiz();
+        }
+        // Si el nodo es una funcion cosecante
+        else if(nodoActPtr->dato.substr(0, 4) == "csch")  {
+            // Crea los nodos que contendran la derivada de la funcion cosecante
+            NodoArbol *derCsch1 = new NodoArbol("csch" + nodoActPtr->dato.substr(4));
+            NodoArbol *derCsch2 = new NodoArbol("coth" + nodoActPtr->dato.substr(4));
+            NodoArbol *cero = new NodoArbol("0");
+            NodoArbol *res = new NodoArbol("-");
+            NodoArbol *prod = new NodoArbol("*");
+
+            // Crea un arbol de sintaxis con el argumento para poder derivarlo
+            int inicio = nodoActPtr->dato.find("[");
+            int final = nodoActPtr->dato.find("]");
+            ArbolDerivada *arbolAux = new ArbolDerivada(nodoActPtr->dato.substr((inicio + 1), (final - inicio - 1)));
+            arbolAux->infijoAPrefijo();
+            arbolAux->prefijoAArbol();
+            arbolAux->derivarArbol();
+
+            // Cambia el nodo por el signo producto
+            nodoActPtr->dato = "*";
+
+            // Aplica la regla de derivacion
+            res->izq = cero;
+            res->der = derCsch1;
+            prod->izq = res;
+            prod->der = derCsch2;
+            nodoActPtr->izq = prod;
+            nodoActPtr->der = arbolAux->getNodoRaiz();
+        }
         // Si el nodo es una funcion seno
         else if(nodoActPtr->dato.substr(0, 3) == "sen" || nodoActPtr->dato.substr(0, 3) == "sin")  {
             // Crea el nodo que contendra la derivada de la funcion seno
@@ -640,6 +788,110 @@ void ArbolDerivada::derivarNodo(NodoArbol *nodoActPtr)
             // Aplica la regla de derivacion
             nodoActPtr->izq = arbolAux->getNodoRaiz();
             nodoActPtr->der = den->getNodoRaiz();
+        }
+        // Si el nodo es una funcion tangente
+        else if(nodoActPtr->dato.substr(0, 3) == "tan")  {
+            // Crea los nodos que contendran la derivada de la funcion tangente
+            NodoArbol *derTan = new NodoArbol("sec" + nodoActPtr->dato.substr(3));
+            NodoArbol *pot = new NodoArbol("^");
+            NodoArbol *dos = new NodoArbol("2");
+
+            // Crea un arbol de sintaxis con el argumento para poder derivarlo
+            int inicio = nodoActPtr->dato.find("[");
+            int final = nodoActPtr->dato.find("]");
+            ArbolDerivada *arbolAux = new ArbolDerivada(nodoActPtr->dato.substr((inicio + 1), (final - inicio - 1)));
+            arbolAux->infijoAPrefijo();
+            arbolAux->prefijoAArbol();
+            arbolAux->derivarArbol();
+
+            // Cambia el nodo por el signo producto
+            nodoActPtr->dato = "*";
+
+            // Aplica la regla de derivacion
+            pot->izq = derTan;
+            pot->der = dos;
+            nodoActPtr->izq = pot;
+            nodoActPtr->der = arbolAux->getNodoRaiz();
+        }
+        // Si el nodo es una funcion cotangete
+        else if(nodoActPtr->dato.substr(0, 3) == "cot")  {
+            // Crea los nodos que contendran la derivada de la funcion cotangente
+            NodoArbol *derCot = new NodoArbol("csc" + nodoActPtr->dato.substr(3));
+            NodoArbol *cero = new NodoArbol("0");
+            NodoArbol *res = new NodoArbol("-");
+            NodoArbol *pot = new NodoArbol("^");
+            NodoArbol *dos = new NodoArbol("2");
+
+            // Crea un arbol de sintaxis con el argumento para poder derivarlo
+            int inicio = nodoActPtr->dato.find("[");
+            int final = nodoActPtr->dato.find("]");
+            ArbolDerivada *arbolAux = new ArbolDerivada(nodoActPtr->dato.substr((inicio + 1), (final - inicio - 1)));
+            arbolAux->infijoAPrefijo();
+            arbolAux->prefijoAArbol();
+            arbolAux->derivarArbol();
+
+            // Cambia el nodo por el signo producto
+            nodoActPtr->dato = "*";
+
+            // Aplica la regla de derivacion
+            res->izq = cero;
+            res->der = derCot;
+            pot->izq = res;
+            pot->der = dos;
+            nodoActPtr->izq = pot;
+            nodoActPtr->der = arbolAux->getNodoRaiz();
+        }
+        // Si el nodo es una funcion secante
+        else if(nodoActPtr->dato.substr(0, 3) == "sec")  {
+            // Crea los nodos que contendran la derivada de la funcion secante
+            NodoArbol *derSec1 = new NodoArbol("sec" + nodoActPtr->dato.substr(3));
+            NodoArbol *derSec2 = new NodoArbol("tan" + nodoActPtr->dato.substr(3));
+            NodoArbol *prod = new NodoArbol("*");
+
+            // Crea un arbol de sintaxis con el argumento para poder derivarlo
+            int inicio = nodoActPtr->dato.find("[");
+            int final = nodoActPtr->dato.find("]");
+            ArbolDerivada *arbolAux = new ArbolDerivada(nodoActPtr->dato.substr((inicio + 1), (final - inicio - 1)));
+            arbolAux->infijoAPrefijo();
+            arbolAux->prefijoAArbol();
+            arbolAux->derivarArbol();
+
+            // Cambia el nodo por el signo producto
+            nodoActPtr->dato = "*";
+
+            // Aplica la regla de derivacion
+            prod->izq = derSec1;
+            prod->der = derSec2;
+            nodoActPtr->izq = prod;
+            nodoActPtr->der = arbolAux->getNodoRaiz();
+        }
+        // Si el nodo es una funcion cosecante
+        else if(nodoActPtr->dato.substr(0, 3) == "csc")  {
+            // Crea los nodos que contendran la derivada de la funcion cosecante
+            NodoArbol *derCsc1 = new NodoArbol("csc" + nodoActPtr->dato.substr(3));
+            NodoArbol *derCsc2 = new NodoArbol("cot" + nodoActPtr->dato.substr(3));
+            NodoArbol *cero = new NodoArbol("0");
+            NodoArbol *res = new NodoArbol("-");
+            NodoArbol *prod = new NodoArbol("*");
+
+            // Crea un arbol de sintaxis con el argumento para poder derivarlo
+            int inicio = nodoActPtr->dato.find("[");
+            int final = nodoActPtr->dato.find("]");
+            ArbolDerivada *arbolAux = new ArbolDerivada(nodoActPtr->dato.substr((inicio + 1), (final - inicio - 1)));
+            arbolAux->infijoAPrefijo();
+            arbolAux->prefijoAArbol();
+            arbolAux->derivarArbol();
+
+            // Cambia el nodo por el signo producto
+            nodoActPtr->dato = "*";
+
+            // Aplica la regla de derivacion
+            res->izq = cero;
+            res->der = derCsc1;
+            prod->izq = res;
+            prod->der = derCsc2;
+            nodoActPtr->izq = prod;
+            nodoActPtr->der = arbolAux->getNodoRaiz();
         }
         // Si el nodo es un numero
         else  {

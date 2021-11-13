@@ -1,7 +1,7 @@
 /**
  * @file arbolBinario.hpp
  *
- * Definicion de la clase "ArbolBinario"
+ * @brief Contiene la definicion de la clase "ArbolBinario"
  *
  * @author Alejandro Delgado Rivera <AlejandroDR_IV@Outlook.com>
  * @version 2.0

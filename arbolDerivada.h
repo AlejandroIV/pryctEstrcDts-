@@ -1,8 +1,7 @@
 /**
  * @file arbolDerivada.h
  *
- * Declaracion de la clase "ArbolDerivada" que es para la construccion de objetos
- * que pueden formar un arbol de expresiones algebraicas y calcular su derivada
+ * @brief Contiene la declaracion de la clase "ArbolDerivada"
  *
  * @author Alejandro Delgado Rivera <AlejandroDR_IV@Outlook.com>
  * @version 1.0
@@ -15,6 +14,9 @@
 #include<stack>
 #include<string>
 
+/**
+ * @brief La clase "ArbolDerivada" es para construir objetos que pueden formar un arbol de expresiones algebraicas y calcular su derivada
+ */
 class ArbolDerivada : public ArbolBinario<std::string>
 {
     private:
@@ -83,7 +85,7 @@ class ArbolDerivada : public ArbolBinario<std::string>
         void derivarNodo(NodoArbol *nodoActPtr);
 
         /**
-         * @param Regresa una cadena con los terminos del arbol de expresiones algebraicas agrupados entre parentesis
+         * @brief Regresa una cadena con los terminos del arbol de expresiones algebraicas agrupados entre parentesis
          * @param nodoActPtr Nodo del arbol de expresiones algebraicas que se desea agrupar
          * @return Cadena con la expresion algebraica agrupada entre parentesis
          */
